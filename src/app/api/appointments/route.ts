@@ -1,7 +1,8 @@
-import { auth } from "@clerk/nextjs/server";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { apiHandler } from "@/lib/api";
+import { sendBookingConfirmation } from "@/lib/email";
 
 async function createDailyRoom(appointmentId: string): Promise<string> {
   const res = await fetch("https://api.daily.co/v1/rooms", {
@@ -61,6 +62,29 @@ export const POST = apiHandler(async (req) => {
     where: { id: appointment.id },
     data: { videoRoomUrl },
   });
+
+  // Send confirmation emails — fire and forget, don't block the response
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+  const sessionUrl = `${appUrl}/session/${appointment.id}`;
+
+  const clerk = await clerkClient();
+  const [patientUser, providerUser] = await Promise.all([
+    clerk.users.getUser(userId),
+    clerk.users.getUser(provider.clerkUserId),
+  ]);
+
+  const patientEmail = patientUser.emailAddresses[0]?.emailAddress;
+  const providerEmail = providerUser.emailAddresses[0]?.emailAddress;
+
+  if (patientEmail && providerEmail) {
+    sendBookingConfirmation({
+      patientEmail,
+      providerEmail,
+      providerName: provider.name,
+      scheduledAt: updated.scheduledAt,
+      sessionUrl,
+    }).catch((err) => console.error("[Email Error]", err));
+  }
 
   return NextResponse.json({ appointment: updated });
 });
