@@ -33,15 +33,17 @@ export default function ProviderSetupPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-slate-50">
-      <div className="max-w-lg w-full mx-4 bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
-        <h1 className="text-2xl font-bold text-slate-900 mb-1">Set up your profile</h1>
-        <p className="text-slate-500 mb-8">This is what patients will see when browsing providers.</p>
+    <main className="flex min-h-screen items-center justify-center bg-slate-50 px-4">
+      <div className="w-full max-w-lg bg-white rounded-2xl border border-slate-200 shadow-sm p-8">
+        <div className="mb-8">
+          <h1 className="text-2xl font-bold text-slate-900">Set up your profile</h1>
+          <p className="text-slate-500 text-sm mt-1">This is what patients see when browsing providers.</p>
+        </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
-              Full name <span className="text-red-500">*</span>
+            <label className="block text-sm font-medium text-slate-700 mb-1.5">
+              Full name <span className="text-red-400">*</span>
             </label>
             <input
               type="text"
@@ -49,12 +51,12 @@ export default function ProviderSetupPage() {
               onChange={(e) => update("name", e.target.value)}
               placeholder="Dr. Jane Smith"
               required
-              className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-sm"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 mb-1.5">
               Specialty
             </label>
             <input
@@ -62,20 +64,20 @@ export default function ProviderSetupPage() {
               value={form.specialty}
               onChange={(e) => update("specialty", e.target.value)}
               placeholder="e.g. Clinical Psychologist, Licensed Therapist"
-              className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-sm"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 mb-1.5">
               Bio
             </label>
             <textarea
               value={form.bio}
               onChange={(e) => update("bio", e.target.value)}
-              placeholder="Tell patients a bit about your background and approach..."
+              placeholder="Tell patients about your background, approach, and experience with diabetes-related mental health..."
               rows={4}
-              className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+              className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none text-sm"
             />
           </div>
 
@@ -88,9 +90,9 @@ export default function ProviderSetupPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+            className="w-full py-2.5 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-lg transition-colors disabled:opacity-60 disabled:cursor-not-allowed text-sm mt-2"
           >
-            {loading ? "Saving..." : "Save profile"}
+            {loading ? "Saving..." : "Save and continue"}
           </button>
         </form>
       </div>

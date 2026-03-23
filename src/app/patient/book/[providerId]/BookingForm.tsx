@@ -45,31 +45,36 @@ export default function BookingForm({ provider }: { provider: Provider }) {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-slate-50">
-      <div className="max-w-md w-full mx-4 bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
-        <h1 className="text-2xl font-bold text-slate-900 mb-1">Book an appointment</h1>
-        <p className="text-blue-600 font-medium mb-6">{provider.name}</p>
+    <main className="flex min-h-screen items-center justify-center bg-slate-50 px-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
+        <div className="mb-7">
+          <p className="text-xs font-semibold text-teal-600 uppercase tracking-widest mb-1">Booking with</p>
+          <h1 className="text-2xl font-bold text-slate-900">{provider.name}</h1>
+          {provider.specialty && (
+            <p className="text-slate-500 text-sm mt-0.5">{provider.specialty}</p>
+          )}
+        </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Date</label>
+            <label className="block text-sm font-medium text-slate-700 mb-1.5">Date</label>
             <input
               type="date"
               value={date}
               min={minDate}
               onChange={(e) => setDate(e.target.value)}
               required
-              className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-sm"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Time</label>
+            <label className="block text-sm font-medium text-slate-700 mb-1.5">Time</label>
             <select
               value={time}
               onChange={(e) => setTime(e.target.value)}
               required
-              className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-sm"
             >
               <option value="">Select a time</option>
               {TIME_SLOTS.map((t) => (
@@ -89,18 +94,18 @@ export default function BookingForm({ provider }: { provider: Provider }) {
             </div>
           )}
 
-          <div className="flex gap-3">
+          <div className="flex gap-3 mt-2">
             <button
               type="button"
               onClick={() => router.back()}
-              className="flex-1 py-3 border border-slate-300 text-slate-700 font-medium rounded-lg hover:bg-slate-50 transition-colors"
+              className="flex-1 py-2.5 border border-slate-300 text-slate-700 text-sm font-medium rounded-lg hover:bg-slate-50 transition-colors"
             >
               Back
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+              className="flex-1 py-2.5 bg-teal-600 hover:bg-teal-700 text-white text-sm font-semibold rounded-lg transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {loading ? "Booking..." : "Confirm booking"}
             </button>
